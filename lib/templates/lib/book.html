@@ -1,0 +1,46 @@
+{% extends 'lib/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<br><br><br>
+<div class="row" style="background-color: #fff; border: 1px solid #ccc; margin-top: 10px;">
+    <div class="col-md-3" style="padding-top: 100px; padding-left: 10px;">
+        <div class="thumbnail">
+            {% if book.cover_image == '' %}
+            <img src="{% static 'lib/img/no_image.png' %}" width="150px">
+            {% else %}
+            <img src="{{ book.cover_image }}" width="150px">
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <br>
+        <h2>{{ book.title }}</h2>
+        <hr>
+        <p>{{ book.description }}</p>
+        {% for a in book.autors %}
+            {{ a.name }}
+        {% endfor %}
+        <b>Published: </b>{{ book.publication_year }}<br>
+        <b>Edition: </b>{{ book.edition }}<br>
+        <b>Copies: </b>{{ book.copies }}<br>
+        <br>
+        <br>
+    </div>
+    <div class="col-md-3" style="padding-top: 100px; padding-right: 100px;">
+        <a class="btn btn-default" href="/lib/book/{{book.id}}/edit" role="button">Edit</a>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#authors").magicSuggest({
+            allowFreeEntries: true,
+            maxSelection: 20,
+            data: '/lib/authors',
+            valueField: 'id',
+            displayField: 'name',
+            resultsField: 'authors'
+        });
+    });
+</script>
+{% endblock %}

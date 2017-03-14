@@ -1,0 +1,85 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="{% static 'lib/img/favicon.ico' %}">
+
+    <title>Library</title>
+
+    <!-- FontAwesome core CSS -->
+    <link rel="stylesheet" href="{% static 'lib/css/font-awesome.min.css' %}">
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'lib/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'lib/css/jumbotron.css' %}" rel="stylesheet">
+
+    <!-- Library stylesheet -->
+    <link href="{% static 'lib/css/library.css' %}" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Oswald">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'lib/css/login.css' %}" />
+
+  </head>
+
+  <body style="background-color: #f6f6f6;">
+    <div class="container">
+        <form class="form-signin" action="{% url 'lib:login' %}" method="POST">
+            <h2 class="form-signin-heading">Log in</h2>
+            <hr>
+            {% csrf_token %}
+            {% if login_error %}
+            <div class="alert alert-danger" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Error:</span>
+                {{login_error}}
+            </div>
+            {% endif %}
+            <label for="inputEmail" class="sr-only">Email address</label>
+            <input id="inputEmail" name="email" class="form-control" placeholder="Email address" required="" autofocus="" type="email">
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input id="inputPassword" name="password" class="form-control" placeholder="Password" required="" type="password">
+            <div class="checkbox">
+              <label>
+                <a href="#">Forgot your password?</a>
+              </label>
+            </div>
+            {% if next %}
+            <input type="hidden" name="next" value="{{ next }}"/>
+            {% endif %}
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
+        </form>
+      <hr>
+
+      <footer>
+        <p>&copy; 2017 Library</p>
+      </footer>
+    </div> <!-- /container -->
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static 'lib/js/jquery.min.js' %}"></script>
+    <script src="{% static 'lib/js/bootstrap.min.js' %}"></script>
+
+    <!-- Library javascript -->
+    <script src="{% static 'lib/js/library.js' %}"></script>
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]>
+    <script src="../../assets/js/ie8-responsive-file-warning.js"></script>
+    <![endif]-->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </body>
+</html>

@@ -1,0 +1,46 @@
+{% extends 'lib/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<br>
+<br>
+<br>
+<div class="row">
+    <div class="col-md-9"></div>
+    <div class="col-md-3">
+        <a class="btn btn-default" href="/lib/book/new/edit" role="button">Add</a>
+    </div>
+</div>
+
+<nav>
+<ul class="pager">
+    {% if books.has_previous %}
+    <li class="previous"><a href="?page={{ events.previous_page_number }}"><span aria-hidden="true">&larr;</span> Previous</a></li>
+    {% endif %}
+    <span>Página {{ books.number }} de {{ books.paginator.num_pages }}</span>&nbsp;
+    {% if books.has_next %}
+    <li class="next"><a href="?page={{ events.next_page_number }}">Next <span aria-hidden="true">&rarr;</span></a></li>
+    {% endif %}
+</ul>
+</nav>
+<div class="row" style="background-color: #fff; border: 1px solid #ccc; margin-top: 10px;">
+    <div class="col-md-12">
+        <br>
+        {% for book in books %}
+        <div class="media">
+          <div class="media-left">
+            <a href="/lib/book/{{ book.id }}">
+              <img class="media-object" src="{{ book.cover_image }}" width="100px" alt="{{ book.title|slice:":10" }}">
+            </a>
+          </div>
+          <div class="media-body">
+            <h4 class="media-heading"><a href="/lib/book/{{ book.id }}">{{ book.title }}</a></h4>
+            {{ book.description|slice:":500" }}
+          </div>
+        </div>
+        <hr>
+        {% endfor %}
+        <br>
+    </div>
+</div>
+{% endblock %}
