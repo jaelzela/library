@@ -5,42 +5,136 @@
 <br>
 <br>
 <br>
-<div class="row">
-    <div class="col-md-9"></div>
-    <div class="col-md-3">
-        <a class="btn btn-default" href="/lib/book/new/edit" role="button">Add</a>
-    </div>
-</div>
-
 <nav>
 <ul class="pager">
-    {% if books.has_previous %}
-    <li class="previous"><a href="?page={{ events.previous_page_number }}"><span aria-hidden="true">&larr;</span> Previous</a></li>
-    {% endif %}
-    <span>Página {{ books.number }} de {{ books.paginator.num_pages }}</span>&nbsp;
-    {% if books.has_next %}
-    <li class="next"><a href="?page={{ events.next_page_number }}">Next <span aria-hidden="true">&rarr;</span></a></li>
+    {% if q_label or f_label %}
+        <div class="alert alert-info alert-dismissible" role="alert">
+            <a href="/lib/" role="button" class="btn btn-default clear" data-dismiss="alert" aria-label="Close">Clear</a>
+            {% if q_label and f_label %}
+            <strong>Query: </strong> {{ q_label }} AND {{ f_label }}
+            {% elif q_label %}
+            <strong>Query: </strong> {{ q_label }}
+            {% elif f_label %}
+            <strong>Query: </strong> {{ f_label }}
+            {% endif %}
+        </div>
+        <br><br>
+        {% if books.has_previous %}
+        <li class="previous"><a href="/lib/search?q={{ request.GET.q }}&f_author={{ request.GET.f_author }}&f_year={{ request.GET.f_year }}&page={{ books.previous_page_number }}"><span aria-hidden="true">&larr;</span> Previous</a></li>
+        {% endif %}
+        <span>Página {{ books.number }} de {{ books.paginator.num_pages }}</span>&nbsp;
+        {% if books.has_next %}
+        <li class="next"><a href="/lib/search?q={{ request.GET.q }}&f_author={{ request.GET.f_author }}&f_year={{ request.GET.f_year }}&page={{ books.next_page_number }}">Next <span aria-hidden="true">&rarr;</span></a></li>
+        {% endif %}
+    {% else %}
+        {% if books.has_previous %}
+        <li class="previous"><a href="?page={{ books.previous_page_number }}"><span aria-hidden="true">&larr;</span> Previous</a></li>
+        {% endif %}
+        <span>Página {{ books.number }} de {{ books.paginator.num_pages }}</span>&nbsp;
+        {% if books.has_next %}
+        <li class="next"><a href="?page={{ books.next_page_number }}">Next <span aria-hidden="true">&rarr;</span></a></li>
+        {% endif %}
     {% endif %}
 </ul>
 </nav>
-<div class="row" style="background-color: #fff; border: 1px solid #ccc; margin-top: 10px;">
-    <div class="col-md-12">
+<div class="row books">
+    <div class="col-md-2 filters">
+        <h5>Filter By:</h5>
+        <hr>
+        <b>Author</b><br>
+        <ul id="authors" class="list-unstyled">
+        {% for a in authors %}
+            {% if request.GET.f_year %}
+            <li><a href="/lib/search?q={{ request.GET.q }}&f_year={{ request.GET.f_year }}&f_author={{ a }}">{{ a }}</a></li>
+            {% else %}
+            <li><a href="/lib/search?q={{ request.GET.q }}&f_author={{ a }}">{{ a }}</a></li>
+            {% endif %}
+        {% endfor %}
+        </ul>
+        <a id="moreauthors" href="#">See More</a>
+        <a id="lessauthors" href="#" style="display: none;">See Less</a>
+        <hr>
+        <b>Year</b><br>
+        <select id="year" class="form-control">
+            <option value="">Select a Year...</option>
+            {% for y in years %}
+                {% if request.GET.f_year == y|stringformat:"i" %}
+                <option value="{{ y }}" selected="selected">{{ y }}</option>
+                {% else %}
+                <option value="{{ y }}">{{ y }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <br>
+    </div>
+    <div class="col-md-10">
         <br>
         {% for book in books %}
         <div class="media">
-          <div class="media-left">
-            <a href="/lib/book/{{ book.id }}">
-              <img class="media-object" src="{{ book.cover_image }}" width="100px" alt="{{ book.title|slice:":10" }}">
-            </a>
-          </div>
-          <div class="media-body">
-            <h4 class="media-heading"><a href="/lib/book/{{ book.id }}">{{ book.title }}</a></h4>
-            {{ book.description|slice:":500" }}
-          </div>
+            <div class="media-left">
+                <a href="/lib/book/{{ book.id }}">
+                {% if book.cover_image == '' %}
+                <img class="media-object" src="{% static 'lib/img/no_image.png' %}" width="100px" alt="{{ book.title|slice:":10" }}">
+                {% else %}
+                <img class="media-object" src="{{ book.cover_image }}" width="100px" alt="{{ book.title|slice:":10" }}">
+                {% endif %}
+                </a>
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading"><a href="/lib/book/{{ book.id }}">{{ book.title }}</a></h4>
+                By
+                {% for a in book.authors.all %}
+                    <a href="/lib/search?q={{ a.name }}">{{ a.name }}</a>,&nbsp;
+                {% endfor %}
+                Published {{ book.publication_year }}
+                <br>
+                {{ book.description|slice:":500" }}
+            </div>
         </div>
         <hr>
         {% endfor %}
         <br>
     </div>
 </div>
+<nav>
+<ul class="pager">
+    {% if q_label %}
+        {% if books.has_previous %}
+        <li class="previous"><a href="/lib/search?q={{ request.GET.q }}&f_author={{ request.GET.f_author }}&f_year={{ request.GET.f_year }}&page={{ books.previous_page_number }}"><span aria-hidden="true">&larr;</span> Previous</a></li>
+        {% endif %}
+        <span>Página {{ books.number }} de {{ books.paginator.num_pages }}</span>&nbsp;
+        {% if books.has_next %}
+        <li class="next"><a href="/lib/search?q={{ request.GET.q }}&f_author={{ request.GET.f_author }}&f_year={{ request.GET.f_year }}&page={{ books.next_page_number }}">Next <span aria-hidden="true">&rarr;</span></a></li>
+        {% endif %}
+    {% else %}
+        {% if books.has_previous %}
+        <li class="previous"><a href="?page={{ books.previous_page_number }}"><span aria-hidden="true">&larr;</span> Previous</a></li>
+        {% endif %}
+        <span>Página {{ books.number }} de {{ books.paginator.num_pages }}</span>&nbsp;
+        {% if books.has_next %}
+        <li class="next"><a href="?page={{ books.next_page_number }}">Next <span aria-hidden="true">&rarr;</span></a></li>
+        {% endif %}
+    {% endif %}
+</ul>
+</nav>
+<script>
+    $(document).ready(function() {
+        $('#year').on('change', function() {
+            window.location.href = "/lib/search?q={{ request.GET.q }}&f_year="+this.value+"&f_author={{ request.GET.f_author }}";
+        })
+        $('ul#authors li:gt(10)').hide();
+        $('#moreauthors').click(function(e) {
+            e.preventDefault()
+            $('ul#authors li:gt(10)').show();
+            $('#lessauthors').show()
+            $('#moreauthors').hide()
+        });
+        $('#lessauthors').click(function(e) {
+            e.preventDefault()
+            $('ul#authors li:gt(10)').hide();
+            $('#moreauthors').show()
+            $('#lessauthors').hide()
+        });
+    });
+</script>
 {% endblock %}

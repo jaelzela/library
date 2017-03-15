@@ -12,15 +12,12 @@
 
     <title>Library</title>
 
-    <!-- FontAwesome core CSS -->
-    <link rel="stylesheet" href="{% static 'lib/css/font-awesome.min.css' %}">
-
     <!-- Bootstrap core CSS -->
     <link href="{% static 'lib/css/bootstrap.min.css' %}" rel="stylesheet">
 
-    <!-- Library stylesheet -->
-    <link href="{% static 'lib/css/library.css' %}" rel="stylesheet">
-    
+    <!-- Singup stylesheet -->
+    <link rel="stylesheet" type="text/css" href="{% static 'lib/css/signup.css' %}" />
+
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Oswald">
 
     <!-- JQuery -->
@@ -41,51 +38,58 @@
           </button>
           <a class="navbar-brand" href="/"><img src="{% static 'lib/img/logo.png'%}" width="100px"></a>
         </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li><a href="/lib/book/new/edit"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Book</a></li>
-          </ul>
-
-          <ul class="nav navbar-nav navbar-right">
-            <li class="navbar-search">
-              <form class="navbar-form">
-                <div class="input-group">
-                  <input id="search-in" type="text" class="form-control" placeholder="Search">
-                  <span class="input-group-btn">
-                    <a id="search-btn" class="btn btn-default search-btn" role="button">
-                      <span class="glyphicon glyphicon-search"></span>
-                    </a>
-                  </span>
-                <div>
-              </form>
-            </li>
-            <li class="dropdown navba-profile">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="/lib/logout">Logout</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
 
     <div class="container">
-      {% block content %}
-      {% endblock %}
 
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <form class="form-signup" action="{% url 'lib:signup' %}" method="POST">
+                {% csrf_token %}
+                <div class="page-header">
+                    <h1>Registration</h1>
+                </div>
+                {% if signup_error %}
+                <div class="alert alert-danger" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span class="sr-only">Error:</span>
+                    {{signup_error}}
+                </div>
+                {% endif %}
+                <div class="form-group">
+                    <label for="first_name">Name *</label>
+                    <input name="first_name" type="text" class="form-control" id="first_name" placeholder="Name" autocomplete="off" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input name="email" type="text" class="form-control" id="email" placeholder="Email" autocomplete="off" maxlength="30" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password *</label>
+                    <input name="password" type="password" class="form-control" id="password" placeholder="Password" required>
+                </div>
+                <br>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+            </form>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("input[type='text']").val('')
+            $("input[type='email']").val('')
+            $("input[type='password']").val('')
+        });
+    </script>
     </div> <!-- /container -->
     <hr>
     <footer>
-      <p>&copy; 2017 Library</p>
+      <p style="padding-left: 50px;">&copy; 2017 Library</p>
     </footer>
     <!-- Bootstrap core JavaScript -->
     <script src="{% static 'lib/js/bootstrap.min.js' %}"></script>
-
-    <!-- Library javascript -->
-    <script src="{% static 'lib/js/library.js' %}"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>

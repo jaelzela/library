@@ -1,0 +1,81 @@
+/************************
+ ********* BASE *********
+ ************************/
+
+.navbar-search {
+    padding-right: 20px;
+    width: 500px;
+}
+
+.navbar-form .input-group {
+    width: 100%;
+}
+
+.search-btn {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+
+.navba-profile {
+    padding-right: 20px;
+}
+
+footer > p {
+    padding-left: 50px;
+}
+
+body {
+    background-color: #f6f6f6;
+}
+
+
+/************************
+ ********* INDEX *********
+ ************************/
+.alert-dismissible {
+    text-align: left;
+}
+
+.books {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    margin-top: 10px;
+}
+
+.filters {
+    padding-top: 20px;
+}
+
+.clear {
+    line-height: 1;
+    float: right;
+}
+
+
+/************************
+ ********* BOOK *********
+ ************************/
+.book {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    margin-top: 10px;
+}
+
+.book-cover {
+    padding-top: 100px;
+    padding-left: 10px;
+}
+
+.book-buttons {
+    padding-top: 100px;
+    padding-right: 100px;
+}
+
+.book-btn {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.book-control-btn {
+    width: 150px;
+}
