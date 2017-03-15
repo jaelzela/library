@@ -52,7 +52,7 @@ In order to setup the Web Application in dev mode. Firstly, you need to clone th
 		
 The file [*requirements.txt*](https://github.com/jzelar/library/blob/master/requirements.txt) is in the project. Fourthly, you need to install **MariaDB**, then create a new database for the application  (don't forget setup the user, password and database name in the [*settings.py*](https://github.com/jzelar/library/blob/master/library/settings.py) fileof the project). Finally, to run the web application in dev mode, execute:
 
-	$ python manage.py runserve
+	$ python manage.py runserver
 	
 And access to the application from your browser in the url: http://localhost:8000/
 
