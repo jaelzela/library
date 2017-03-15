@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-__author__ = "Jael Zela"
+__author__ = "Jael Zela"ru
 
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
@@ -239,7 +239,7 @@ def search(request):
 
         q_label = 'title: "'+query+'" OR author: "'+query+'"' if query else ''
         f_label = ' AND '.join(filter_labels)
-        print q_label, f_label
+
         return render(request, 'lib/index.html', dict(books=books, authors=authors, years=years, q_label=q_label, f_label=f_label))
     else:
         raise Http404
