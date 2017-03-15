@@ -56,3 +56,10 @@ The file [*requirements.txt*](https://github.com/jzelar/library/blob/master/requ
 	
 And access to the application from your browser in the url: http://localhost:8000/
 
+## Default Credentials
+If you restored the database from the [dump file](https://github.com/jzelar/library/blob/master/library_db.sql), you can login the application with the following user:
+
+			user: librarian@library.org
+			password: librarian
+	
+You will find 23 books and 28 authors.
